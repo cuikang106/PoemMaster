@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">PoemMaster</string>
+
+    <string name="login_button">Login</string>
+    <string name="hello_browse_fragment">Hello browse fragment</string>
+    <string name="hello_exam_fragment">Hello exam fragment</string>
+    <string name="hello_seek_fragment">Hello seek fragment</string>
+    <string name="hello_me_fragment">Hello me fragment</string>
+    <string name="sign_out_button">取消自动登录</string>
+
+</resources>
