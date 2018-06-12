@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.content.Intent;
 
+import com.example.cuikang.poemmaster.UserManage.UserManage;
+
 public class SplashActivity extends Activity {
 
     private static final int GO_HOME=0;
@@ -17,19 +19,20 @@ public class SplashActivity extends Activity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case GO_HOME://去主页
-                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                    startActivity(intent);
+                    Intent intentMainActivity = new Intent(SplashActivity.this, MainActivity.class);
+                    startActivity(intentMainActivity);
                     finish();
                     break;
                 case GO_LOGIN://去登录页
-                    Intent intent2 = new Intent(SplashActivity.this, LoginActivity.class);
-                    startActivity(intent2);
+                    Intent intentLoginActivity = new Intent(SplashActivity.this, LoginActivity.class);
+                    startActivity(intentLoginActivity);
                     finish();
                     break;
             }
         }
     };
 
+    //创建活动2s后，根据记录情况发送信息，信息被上面的handleMessage接收
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //启动时进行自动登录判断，SharePrefences中有数据，则跳转到主页，没数据则跳转到登录页

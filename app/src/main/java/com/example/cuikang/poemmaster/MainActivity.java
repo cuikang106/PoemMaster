@@ -3,14 +3,15 @@ package com.example.cuikang.poemmaster;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.example.cuikang.poemmaster.Fragments.BrowseFragment;
+import com.example.cuikang.poemmaster.Fragments.ExamFragment;
+import com.example.cuikang.poemmaster.Fragments.MeFragment;
+import com.example.cuikang.poemmaster.Fragments.SeekFragment;
 
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener {

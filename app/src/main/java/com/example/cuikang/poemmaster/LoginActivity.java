@@ -1,80 +1,113 @@
 package com.example.cuikang.poemmaster;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
-public class LoginActivity extends AppCompatActivity {
+import com.example.cuikang.baselibrary.activity.BaseActivity;
+import com.example.cuikang.baselibrary.http.bean.CommonRequest;
+import com.example.cuikang.baselibrary.http.bean.CommonResponse;
+import com.example.cuikang.baselibrary.http.interf.ResponseHandler;
+import com.example.cuikang.baselibrary.util.DialogUtil;
+import com.example.cuikang.poemmaster.UserManage.UserManage;
+import com.example.cuikang.poemmaster.url.ServerURL;
 
-    private EditText edt_username;
-    private EditText edt_password;
+public class LoginActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //进行必要的初始化工作
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        initViews();
+
+        final EditText edtName =  findViewById(R.id.edt_name);
+        final EditText edtPassword =  findViewById(R.id.edt_password);
+
+        Button btnLogin =  findViewById(R.id.btn_login);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                login(edtName.getText().toString(), edtPassword.getText().toString());
+            }
+        });
+
+        Button btnRegister =  findViewById(R.id.btn_register);
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                register(edtName.getText().toString(), edtPassword.getText().toString());
+            }
+        });
+        findViewById(R.id.btn_visitor).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                LoginActivity.this.finish();
+            }
+        });
     }
 
-    //initViews函数，获取输入框的View元素，并为按钮设置监听器
-    private void initViews() {
-        edt_username =  findViewById(R.id.edt_username);
-        edt_password =  findViewById(R.id.edt_password);
-        findViewById(R.id.btn_login).setOnClickListener(mOnClickListener);
-    }
+    private void login(final String name, final String password) {
 
-    //创建一个OnClickListener实例，并重写它的onClick方法
-    private View.OnClickListener mOnClickListener = new View.OnClickListener() {
+        final CommonRequest request = new CommonRequest();
+        request.addRequestParam("name", name);
+        request.addRequestParam("password", password);
+        //实现基类中的ResponseHandler的接口
+        sendHttpPostRequest(ServerURL.LOGIN, request, new ResponseHandler() {
+            //重写success和fail函数以实现接口，函数内容根据应用情况自定
+            @Override
+            public void success(CommonResponse response) {
 
+                DialogUtil.showHintDialog(LoginActivity.this, "登陆成功啦！", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        DialogUtil.dismissDialog();
+                        UserManage.getInstance().saveUserInfo(LoginActivity.this,name,password);
+                        startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                        LoginActivity.this.finish();
 
-        @Override
-        public void onClick(View view) {
-
-            switch (view.getId()) {
-                case R.id.btn_login://登录
-                    String userName = edt_username.getText().toString();
-                    String userPwd = edt_password.getText().toString();
-                    //把输入框的内容存入UserInfo中
-                    if(userName.equals("admin")){
-                        if(userPwd.equals("admin")){
-                            showToast("登录成功");
-                            UserManage.getInstance().saveUserInfo(LoginActivity.this, userName, userPwd);
-                            //跳转到主页
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            //finish();
-                            onDestroy();
-                            //break;
-                        }else
-                            showToast("密码错误");
-                    }else
-                        showToast("账户不存在");
-
+                    }
+                });
             }
 
-        }
-    };
+            @Override
+            public void fail(String failCode, String failMsg) {
+                //tvRequest.setText(request.getJsonStr());
+                //tvResponse.setText(failCode + "\n" + failMsg);
+                DialogUtil.showHintDialog(LoginActivity.this, true, "登陆失败", failCode + " : " + failMsg, "关闭对话框", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-    //自定义Toast样式
-    private void showToast(String s) {
-        Toast t = Toast.makeText(this,
-                s,
-                Toast.LENGTH_SHORT);
+                        DialogUtil.dismissDialog();
+                    }
+                });
+            }
+        });
+    }
+    private void register(String name, String password) {
 
-        // 字体
-        ViewGroup group = (ViewGroup) t.getView();
-        TextView messageTextView = (TextView) group.getChildAt(0);
-        messageTextView.setTextSize(18);
-        // 居中
-        t.setGravity(Gravity.CENTER, 0, 0);
-        // 显示
-        t.show();
+        final CommonRequest request = new CommonRequest();
+        request.addRequestParam("name", name);
+        request.addRequestParam("password", password);
+        //实现基类中的ResponseHandler的接口
+        sendHttpPostRequest(ServerURL.REGISTER, request, new ResponseHandler() {
+            @Override
+            public void success(CommonResponse response) {
+
+           DialogUtil.showHintDialog(LoginActivity.this, "注册成功！", false);
+            }
+
+            @Override
+            public void fail(String failCode, String failMsg) {
+
+                DialogUtil.showHintDialog(LoginActivity.this, true, "注册失败", failCode + " : " + failMsg, "关闭对话框", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DialogUtil.dismissDialog();
+                    }
+                });
+            }
+        });
     }
 }

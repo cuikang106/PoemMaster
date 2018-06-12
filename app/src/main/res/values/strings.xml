@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">PoemMaster</string>
-
     <string name="login_button">Login</string>
+    <string name="register_button">Register</string>
+    <string name="visitor_button">游客登录</string>
     <string name="hello_browse_fragment">Hello browse fragment</string>
     <string name="hello_exam_fragment">Hello exam fragment</string>
     <string name="hello_seek_fragment">Hello seek fragment</string>
