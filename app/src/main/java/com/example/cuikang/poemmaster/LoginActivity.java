@@ -53,7 +53,8 @@ public class LoginActivity extends BaseActivity {
         final CommonRequest request = new CommonRequest();
         request.addRequestParam("name", name);
         request.addRequestParam("password", password);
-        //实现基类中的ResponseHandler的接口
+
+        //重写基类中的发送http报文方法，实现基类中的ResponseHandler的接口
         sendHttpPostRequest(ServerURL.LOGIN, request, new ResponseHandler() {
             //重写success和fail函数以实现接口，函数内容根据应用情况自定
             @Override
@@ -73,8 +74,6 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void fail(String failCode, String failMsg) {
-                //tvRequest.setText(request.getJsonStr());
-                //tvResponse.setText(failCode + "\n" + failMsg);
                 DialogUtil.showHintDialog(LoginActivity.this, true, "登陆失败", failCode + " : " + failMsg, "关闭对话框", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

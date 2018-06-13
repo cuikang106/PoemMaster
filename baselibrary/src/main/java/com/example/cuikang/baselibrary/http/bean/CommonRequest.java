@@ -51,16 +51,9 @@ public class CommonRequest {
      * @return 请求报文的json字符串
      */
     public String getJsonStr() {
-        // 由于Android源码自带的JSon功能不够强大（没有直接从Bean转到JSonObject的API），为了不引入第三方资源这里我们只能手动拼装一下啦
+
         JSONObject object = new JSONObject(Param);
-        //JSONObject param = new JSONObject(requestParam);
-        /*try {
-            // 下边2个"requestCode"、"requestParam"是和服务器约定好的请求体字段名称，在本文接下来的服务端代码会说到
-            //object.put("requestCode", requestCode);
-            //object.put("requestParam", param);
-        } catch (JSONException e) {
-            LogUtil.logErr("请求报文组装异常：" + e.getMessage());
-        }*/
+
         // 打印原始请求报文
         LogUtil.logRequest(object.toString());
         return object.toString();

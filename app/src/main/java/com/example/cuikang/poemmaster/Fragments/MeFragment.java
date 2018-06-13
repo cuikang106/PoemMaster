@@ -1,13 +1,17 @@
 package com.example.cuikang.poemmaster.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.cuikang.poemmaster.AboutActivity;
+import com.example.cuikang.poemmaster.DonateActivity;
 import com.example.cuikang.poemmaster.R;
 import com.example.cuikang.poemmaster.UserManage.UserManage;
 
@@ -39,38 +43,38 @@ public class MeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        //页面是静态的，不需要调整
-       /*
-        View view=inflater.inflate(R.layout.fragment_me,null);
-        Button btn_sign_out=view.findViewById(R.id.btn_sign_out);
-        btn_sign_out.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClear(view);
-            }
-        });*/
         return inflater.inflate(R.layout.fragment_me, container, false);
     }
 
     @Override
     public void onActivityCreated(Bundle saveInstanceState){
         super.onActivityCreated(saveInstanceState);
-
-        Button btn_sign_out=getActivity().findViewById(R.id.btn_sign_out);
-        btn_sign_out.setOnClickListener(new View.OnClickListener() {
+        AdapterView.OnItemClickListener itemClickListener=new AdapterView.OnItemClickListener(){
             @Override
-            public void onClick(View view) {
-                onClear(view);
+            public void onItemClick(AdapterView<?>listView,View v,int position,long id){
+                if(position==0) {
+                    Intent intentDonate = new Intent(getActivity(), DonateActivity.class);
+                    startActivity(intentDonate);
+                }
+                if(position==1){
+                    onClear();
+                }
+                if(position==2){
+                    Intent intentAbout = new Intent(getActivity(), AboutActivity.class);
+                    startActivity(intentAbout);
+                }
             }
-        });
+        };
+        ListView listview=getView().findViewById(R.id.list_options);
+        listview.setOnItemClickListener(itemClickListener);
     }
 
-    public void onClear(View view){
+    public void onClear(){
         System.out.println("Testing");
         UserManage.getInstance().clearUserInfo(getActivity());
-        Toast t = Toast.makeText(getActivity(), "已取消！", Toast.LENGTH_SHORT);
+        Toast t = Toast.makeText(getActivity(), "已注销！", Toast.LENGTH_SHORT);
         t.show();
     }
+
 
 }

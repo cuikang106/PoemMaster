@@ -7,6 +7,12 @@
     <string name="hello_exam_fragment">Hello exam fragment</string>
     <string name="hello_seek_fragment">Hello seek fragment</string>
     <string name="hello_me_fragment">Hello me fragment</string>
-    <string name="sign_out_button">取消自动登录</string>
+    <string-array name="options">
+        <item>充值</item>
+        <item>注销</item>
+        <item>关于</item>
+    </string-array>
+    <string name="donate_remark">扫描二维码，支持我们</string>
+    <string name="about_us">想想这里怎么写？</string>
 
 </resources>
