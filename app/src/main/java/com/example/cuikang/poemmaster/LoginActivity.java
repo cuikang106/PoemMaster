@@ -82,7 +82,7 @@ public class LoginActivity extends BaseActivity {
         sendHttpPostRequest(ServerURL.REGISTER, request, new ResponseHandler() {
             @Override
             public void success(CommonResponse response) {
-                Toast.makeText(LoginActivity.this,"登陆成功！",Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this,"注册成功！",Toast.LENGTH_LONG).show();
             }
 
             @Override
