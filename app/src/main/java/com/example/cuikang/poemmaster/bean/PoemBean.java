@@ -55,7 +55,7 @@ public class PoemBean implements Parcelable {
         return paragraphs;
     }
 
-    public void setParagraphs(List<String> paragraphs) {
+        public void setParagraphs(List<String> paragraphs) {
         this.paragraphs = paragraphs;
     }
 

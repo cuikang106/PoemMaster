@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.content.Intent;
-
 import com.example.cuikang.poemmaster.UserManage.UserManage;
 
 public class SplashActivity extends Activity {
@@ -35,15 +34,15 @@ public class SplashActivity extends Activity {
     //创建活动2s后，根据记录情况发送信息，信息被上面的handleMessage接收
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash);
         //启动时进行自动登录判断，SharePrefences中有数据，则跳转到主页，没数据则跳转到登录页
         if (UserManage.getInstance().hasUserInfo(this))
         {
             //在2000ms后发送数据
-            mHandler.sendEmptyMessageDelayed(GO_HOME, 2000);
+            mHandler.sendEmptyMessageDelayed(GO_HOME, 3000);
         } else {
             //与上一句相同
-            mHandler.sendEmptyMessageAtTime(GO_LOGIN, 2000);
+            mHandler.sendEmptyMessageDelayed(GO_LOGIN, 3000);
         }
     }
-
 }

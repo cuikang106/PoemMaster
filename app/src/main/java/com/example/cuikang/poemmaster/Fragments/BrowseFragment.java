@@ -1,7 +1,6 @@
 package com.example.cuikang.poemmaster.Fragments;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.cuikang.poemmaster.CommentActivity;
 import com.example.cuikang.poemmaster.DatabaseUtil.HandlePoem;
 import com.example.cuikang.poemmaster.MainActivity;
@@ -25,7 +23,6 @@ public class BrowseFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
-    private SQLiteDatabase db;
     private int sequence;
 
 
@@ -178,7 +175,27 @@ public class BrowseFragment extends Fragment {
             Intent intentComment=new Intent(getActivity(),CommentActivity.class);
             intentComment.putExtra("commentText",commentText);
             intentComment.putExtra("poemID",String.valueOf(sequence));
-            startActivity(intentComment);
+            startActivityForResult(intentComment,0);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        switch (requestCode){
+            case 0:
+                if(data.getBooleanExtra("bool",false)) {
+                    Toast.makeText(getActivity(), "评论成功！", Toast.LENGTH_LONG).show();
+                    EditText editText=getActivity().findViewById(R.id.edt_comment);
+                    editText.setText("");
+                }else {
+                    String resCode=data.getStringExtra("resCode");
+                    String resMsg=data.getStringExtra("resMsg");
+                    Toast.makeText(getActivity(),resCode+":"+resMsg,Toast.LENGTH_LONG).show();
+
+                    EditText editText=getActivity().findViewById(R.id.edt_comment);
+                    editText.setText("");
+
+                }
         }
     }
 }

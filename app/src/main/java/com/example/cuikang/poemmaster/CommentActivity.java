@@ -1,4 +1,5 @@
 package com.example.cuikang.poemmaster;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.cuikang.baselibrary.activity.BaseActivity;
@@ -37,11 +38,19 @@ public class CommentActivity extends BaseActivity {
         sendHttpPostRequest(ServerURL.COMMENT, request, new ResponseHandler() {
             @Override
             public void success(CommonResponse response) {
+                Intent intent=new Intent();
+                intent.putExtra("bool",true);
+                setResult(0,intent);
                 finish();
             }
 
             @Override
             public void fail(String failCode, String failMsg) {
+                Intent intent=new Intent();
+                intent.putExtra("bool",false);
+                intent.putExtra("failCode",failCode);
+                intent.putExtra("failMes",failMsg);
+                setResult(0,intent);
                 finish();
             }
         });

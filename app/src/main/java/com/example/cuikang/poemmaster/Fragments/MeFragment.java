@@ -8,10 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cuikang.poemmaster.AboutActivity;
 import com.example.cuikang.poemmaster.DonateActivity;
+import com.example.cuikang.poemmaster.LoginActivity;
 import com.example.cuikang.poemmaster.R;
 import com.example.cuikang.poemmaster.UserManage.UserManage;
 
@@ -44,11 +46,16 @@ public class MeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_me, container, false);
+
     }
 
     @Override
     public void onActivityCreated(Bundle saveInstanceState){
         super.onActivityCreated(saveInstanceState);
+
+        TextView textView=getView().findViewById(R.id.tv_username);
+        textView.setText(UserManage.getInstance().getUserInfo(getActivity()).getUserName());
+
         AdapterView.OnItemClickListener itemClickListener=new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?>listView,View v,int position,long id){
@@ -56,10 +63,13 @@ public class MeFragment extends Fragment {
                     Intent intentDonate = new Intent(getActivity(), DonateActivity.class);
                     startActivity(intentDonate);
                 }
-                if(position==1){
+                if(position==3){
                     onClear();
+                    getActivity().finish();
+                    Intent intent=new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
                 }
-                if(position==2){
+                if(position==4){
                     Intent intentAbout = new Intent(getActivity(), AboutActivity.class);
                     startActivity(intentAbout);
                 }
@@ -70,11 +80,10 @@ public class MeFragment extends Fragment {
     }
 
     public void onClear(){
-        System.out.println("Testing");
+        TextView textView=getView().findViewById(R.id.tv_username);
+        textView.setText("");
         UserManage.getInstance().clearUserInfo(getActivity());
         Toast t = Toast.makeText(getActivity(), "已注销！", Toast.LENGTH_SHORT);
         t.show();
     }
-
-
 }

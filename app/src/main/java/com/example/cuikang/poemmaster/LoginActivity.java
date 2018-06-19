@@ -5,12 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.cuikang.baselibrary.activity.BaseActivity;
 import com.example.cuikang.baselibrary.http.bean.CommonRequest;
 import com.example.cuikang.baselibrary.http.bean.CommonResponse;
 import com.example.cuikang.baselibrary.http.interf.ResponseHandler;
-import com.example.cuikang.baselibrary.util.DialogUtil;
 import com.example.cuikang.poemmaster.UserManage.UserManage;
 import com.example.cuikang.poemmaster.url.ServerURL;
 
@@ -20,6 +20,8 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
 
         final EditText edtName =  findViewById(R.id.edt_name);
         final EditText edtPassword =  findViewById(R.id.edt_password);
@@ -59,28 +61,15 @@ public class LoginActivity extends BaseActivity {
             //重写success和fail函数以实现接口，函数内容根据应用情况自定
             @Override
             public void success(CommonResponse response) {
-
-                DialogUtil.showHintDialog(LoginActivity.this, "登陆成功啦！", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        DialogUtil.dismissDialog();
-                        UserManage.getInstance().saveUserInfo(LoginActivity.this,name,password);
-                        startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                        LoginActivity.this.finish();
-
-                    }
-                });
+                Toast.makeText(LoginActivity.this,"登陆成功！",Toast.LENGTH_LONG).show();
+                UserManage.getInstance().saveUserInfo(LoginActivity.this,name,password);
+                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                LoginActivity.this.finish();
             }
 
             @Override
             public void fail(String failCode, String failMsg) {
-                DialogUtil.showHintDialog(LoginActivity.this, true, "登陆失败", failCode + " : " + failMsg, "关闭对话框", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        DialogUtil.dismissDialog();
-                    }
-                });
+                Toast.makeText(LoginActivity.this,failCode+":"+failMsg,Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -93,19 +82,13 @@ public class LoginActivity extends BaseActivity {
         sendHttpPostRequest(ServerURL.REGISTER, request, new ResponseHandler() {
             @Override
             public void success(CommonResponse response) {
-
-           DialogUtil.showHintDialog(LoginActivity.this, "注册成功！", false);
+                Toast.makeText(LoginActivity.this,"登陆成功！",Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void fail(String failCode, String failMsg) {
 
-                DialogUtil.showHintDialog(LoginActivity.this, true, "注册失败", failCode + " : " + failMsg, "关闭对话框", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        DialogUtil.dismissDialog();
-                    }
-                });
+                Toast.makeText(LoginActivity.this,failCode+":"+failMsg,Toast.LENGTH_LONG).show();
             }
         });
     }

@@ -9,7 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:textSize="15dp"/>
+        android:textSize="15dp"
+        android:textColor="@android:color/black"/>
 
     <TextView
         android:id="@+id/poem_title"
@@ -19,7 +20,8 @@
         android:textStyle="bold"
         android:layout_marginLeft="10dp"
         android:fontFamily="serif"
-        android:textSize="18dp"/>
+        android:textSize="18dp"
+        android:textColor="@android:color/black"/>
 
     <TextView
         android:id="@+id/poem_author"
@@ -29,7 +31,7 @@
         android:layout_marginLeft="10dp"
         android:textStyle="italic"
         android:fontFamily="sans-serif"
-        android:textSize="15dp"/>
-
+        android:textSize="15dp"
+        android:textColor="@android:color/black"/>
 
 </LinearLayout>

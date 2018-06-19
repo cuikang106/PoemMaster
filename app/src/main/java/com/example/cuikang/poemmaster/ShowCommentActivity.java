@@ -8,14 +8,16 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.example.cuikang.baselibrary.activity.BaseActivity;
 import com.example.cuikang.baselibrary.http.bean.CommonRequest;
 import com.example.cuikang.baselibrary.http.bean.CommonResponse;
 import com.example.cuikang.baselibrary.http.interf.ResponseHandler;
-import com.example.cuikang.baselibrary.util.DialogUtil;
 import com.example.cuikang.poemmaster.url.ServerURL;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static android.widget.Toast.LENGTH_LONG;
 
 
 public class ShowCommentActivity extends BaseActivity {
@@ -45,18 +47,13 @@ public class ShowCommentActivity extends BaseActivity {
                     CommentAdapter adapter = new CommentAdapter(ShowCommentActivity.this, response.getDataList());
                     commentList.setAdapter(adapter);
                 } else {
-                    DialogUtil.showHintDialog(ShowCommentActivity.this, "列表数据为空", true);
+                    Toast.makeText(ShowCommentActivity.this,"列表数据为空",LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void fail(String failCode, String failMsg) {
-                DialogUtil.showHintDialog(ShowCommentActivity.this,true,"查看失败,检查一下网络？", failCode + ":" + failMsg,"好的", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        DialogUtil.dismissDialog();
-                    }
-                });
+                Toast.makeText(ShowCommentActivity.this,failCode + ":" + failMsg,LENGTH_LONG).show();
             }
         });
     }
@@ -89,7 +86,7 @@ public class ShowCommentActivity extends BaseActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder holder;
             if (convertView == null) {
-                convertView = LayoutInflater.from(context).inflate(R.layout.item_comment, parent, false);
+                convertView = LayoutInflater.from(context).inflate(R.layout.comment_item, parent, false);
                 holder = new ViewHolder();
                 holder.tvName =  convertView.findViewById(R.id.tv_name);
                 holder.tvTime =  convertView.findViewById(R.id.tv_time);

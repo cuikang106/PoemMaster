@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.example.cuikang.poemmaster.DatabaseUtil.AssetsDatabaseManager;
@@ -14,7 +13,6 @@ import com.example.cuikang.poemmaster.Fragments.BrowseFragment;
 import com.example.cuikang.poemmaster.Fragments.ExamFragment;
 import com.example.cuikang.poemmaster.Fragments.MeFragment;
 import com.example.cuikang.poemmaster.Fragments.SeekFragment;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +23,7 @@ import com.example.cuikang.poemmaster.bean.PoemBean;
 public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener {
 
     int lastSelectedPosition=0;                     //上次选中的位置，默认为第一个
-    private String TAG=MainActivity.class.getSimpleName();//获得类的简写名称
+    public String TAG=MainActivity.class.getSimpleName();//获得类的简写名称
     public int exchange=-1;  //传递数据的媒介，在查找导航栏中点击一首诗，会跳到浏览中相应的诗
     public List<PoemBean> poemList = new ArrayList<>();
 
@@ -51,9 +49,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 .setTabSelectedListener(this)
                 .setMode(BottomNavigationBar.MODE_FIXED)//Item显示模式
                 .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_RIPPLE)//选中样式
-                .setActiveColor("#FF107FFD") //选中颜色
+                .setActiveColor("#202020") //选中颜色
                 .setInActiveColor("#e9e6e6") //未选中颜色
-                .setBarBackgroundColor("#1ccbae");//导航栏背景色
+                .setBarBackgroundColor("#99cc33");//导航栏背景色
 
         //添加导航按钮
         bottomNavigationBar
@@ -146,12 +144,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 poem.setAuthor(cursor.getString(cursor.getColumnIndex("author")));
                 poem.setParagraphs(Arrays.asList(cursor.getString(cursor.getColumnIndex("paragraphs")).split(",")));
                 poem.setStrains(Arrays.asList(cursor.getString(cursor.getColumnIndex("strains")).split(",")));
-//                Log.d(TAG, poem.getParagraphs().get(1));
                 poemList.add(poem);
             } while (cursor.moveToNext());
             cursor.close();
         }
     }
-
-
 }
